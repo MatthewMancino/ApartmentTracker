@@ -1,0 +1,24 @@
+Documentation.txt  @Author - Matthew Mancino - CS 1501 - Project 3
+
+In order to implement this project effectively so that our add and remove operations are effcicient there has to be important design
+decisions to be made.  I made three design decisions that I believe led to the most efficient implementation of Apartment Tracker Program
+
+1)Creating an array of Heap-based Priority Queues - In the initial driver program, AptTracker.java, I chose to create an array of Priority Queues.
+The first element in the array is the heap that organizes all the apartment by lowest rent. The second element in the array is the heap
+that organizes all apartments by highest squarefeet. For the subsequent elements, i, I used a hashtable as indirection for the cities 
+themselves. Meaning on add(), I take the apartment's city and hash it to an index corresponding to two NEW PQs for that city(One for rent,
+one for High SQFT) This is the most efficient because when we want to find the lowest rent by city, all we have to do is hash the city string
+then use the value as PQ array index. This makes constant run-time O(1) for options 4,5,6,7.
+
+2)Using StringBuilder as a HashString.   In addition to using indirection in the driver program. I additionally used indirection
+within the PQ itself. on add(), I take the address, apartment number, and Zip code and append them together and use it all as one 
+key for the hashtable within the PQ itself. This prevents apartments that have the same address, num, or zip code from being 
+replaced when a new value is entered. This does not create a considerable increase in run-time because it is O(n) run-time to create
+all HashStrings for all apartments, which due to the nature of the program, the size of n is small enough that it does not have considerable
+increases in run-time.
+
+3)Array-based PQ - Using the array based PQ was virtually necessary to implement an indirection hash function effectively. 
+This is the most efficient because we can still remove and add an item at O(lgn) run-time as a maximum.
+
+Overall, the memory complexity of my program might be more than necessary due to the initialization of the amount of apartments to be 100,
+but this is a safety measure that can be altered simply by asking a user for an input of the amount of apartments used.
